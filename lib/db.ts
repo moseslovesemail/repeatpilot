@@ -4,7 +4,7 @@ const globalForDb = globalThis as unknown as { repeatPilotPool?: Pool };
 
 export const pool = globalForDb.repeatPilotPool ?? new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
+  ssl: process.env.DATABASE_SSL === "require" ? { rejectUnauthorized: false } : undefined,
   max: 10
 });
 
