@@ -1,7 +1,7 @@
 import pg from "pg";
 const { Pool }=pg;
 if(!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required");
-const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.NODE_ENV==="production"?{rejectUnauthorized:false}:undefined});
+const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==="require"?{rejectUnauthorized:false}:undefined});
 await pool.query(`INSERT INTO businesses(name,slug,booking_url,default_interval_months) VALUES ('Demo Heat Pumps','demo-heat-pumps','https://example.com/book',12) ON CONFLICT(slug) DO UPDATE SET name=EXCLUDED.name RETURNING id`);
 const {rows:[business]}=await pool.query(`SELECT id FROM businesses WHERE slug='demo-heat-pumps'`);
 const {rows:[service]}=await pool.query(`INSERT INTO services(business_id,name,default_interval_months,default_value_cents) VALUES ($1,'Annual Heat Pump Service',12,24900) ON CONFLICT(business_id,name) DO UPDATE SET default_value_cents=EXCLUDED.default_value_cents RETURNING id`,[business.id]);
