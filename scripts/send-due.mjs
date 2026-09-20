@@ -2,7 +2,7 @@ import pg from "pg";
 import crypto from "node:crypto";
 const {Pool}=pg;
 if(!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required");
-const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.NODE_ENV==="production"?{rejectUnauthorized:false}:undefined});
+const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==="require"?{rejectUnauthorized:false}:undefined});
 const slug=process.env.BUSINESS_SLUG||"demo-heat-pumps";
 const {rows:businesses}=await pool.query(`SELECT id,name,booking_url FROM businesses WHERE slug=$1`,[slug]);
 if(!businesses[0]) throw new Error(`Business ${slug} not found`);
