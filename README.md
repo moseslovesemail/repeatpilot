@@ -58,3 +58,14 @@ For automated reminder processing, create a second Railway service from the same
 ## V1 guardrails
 
 Do not addCRM pipelines, invoicing, staff scheduling, inventory, quoting, mobile apps or broad AI features until the first real customer has been recovered and attributed.
+
+
+## Pilot infrastructure note
+
+The current Railway demo can run against a PostgreSQL container on Railway's private network. **Do not load production customer data until PostgreSQL has persistent storage** (a Railway managed PostgreSQL database or an attached persistent volume). The application is designed to use a standard `DATABASE_URL`, so the database can be swapped without changing application code.
+
+Normal production deploys should run only:
+
+`node scripts/migrate.mjs`
+
+The synthetic heat-pump seed is for demonstrations only and must not be part of recurring production deploys.
