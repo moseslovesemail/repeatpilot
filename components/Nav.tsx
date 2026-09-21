@@ -11,6 +11,7 @@ export function Nav({ businessName }: { businessName: string }) {
         <Link href="/">Dashboard</Link>
         <Link href="/customers">Customers</Link>
         <Link href="/import">Import</Link>
+        <Link href="/campaigns">Campaigns</Link>
         <Link href="/services">Services</Link>
         <Link href="/settings">Settings</Link>
       </nav>
